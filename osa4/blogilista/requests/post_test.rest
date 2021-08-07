@@ -1,9 +1,62 @@
+
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWQiOiI2MTA4MTM0YWY3NjE2MzJiODQyOWE2MDUiLCJpYXQiOjE2MjgzNDMzNDF9.wa5QIYVPp7XqT3KoWDyIJ3fXvFzuNS19j7PIJopaTMs
 
 {
     "title":"REST_test_blog",
-    "author":"Testerman",
+    "author":"Testerman1123",
     "url":"www.www",
-    "likes":43
+    "likes":43,
+    "user":"6108134af761632b8429a605"
+}
+
+###
+
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username" : "testuser",
+    "name" : "testname",
+    "password" : "secure"
+}
+
+###
+
+DELETE http://localhost:3003/api/blogs/610e8c4431f10c3478bd30f1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWQiOiI2MTA4MTM0YWY3NjE2MzJiODQyOWE2MDUiLCJpYXQiOjE2MjgzNDMyMjZ9.Td82eO9v7nxrzfFtsevk10dwd6Hf2O38Q1opA1qK_LU
+
+###
+
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "id": "6108134af761632b8429a605",
+    "password": "secure"
+}
+
+###
+
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username" : "te",
+    "name" : "testname",
+    "password" : "secure"
+}
+
+###
+
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username" : "testuser",
+    "name" : "testname",
+    "password" : "se"
 }
