@@ -6,7 +6,7 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 
-const ListBlogs = ({blogs, user, updateBlog, deleteBlog}) => {
+const ListBlogs = ({ blogs, user, updateBlog, deleteBlog }) => {
 
   const sortedBlogs = blogs.sort( (a, b) => {return b.likes - a.likes})
 
@@ -20,15 +20,16 @@ const ListBlogs = ({blogs, user, updateBlog, deleteBlog}) => {
   )
 }
 
-const Content = ({  user, blogs, handleLogin, username, password, handleUsernameChange, 
-                    handlePasswordChange, handleLogout, createBlog, blogFormRef, updateBlog, deleteBlog }) => {
+const Content = ({  user, blogs, handleLogin, username, password, handleUsernameChange,
+  handlePasswordChange, handleLogout, createBlog, blogFormRef, updateBlog, deleteBlog }) => {
 
   if (user === null) {
     return (
       <LoginForm  username = {username}     password = {password}
-                  blogs = {blogs}           handleLogin = {handleLogin}
-                  handlePasswordChange = {handlePasswordChange}
-                  handleUsernameChange = {handleUsernameChange}
+        blogs = {blogs}           handleLogin = {handleLogin}
+        handlePasswordChange = {handlePasswordChange}
+        handleUsernameChange = {handleUsernameChange}
+        usernameLabel="username"
       />
     )
   }
@@ -36,14 +37,14 @@ const Content = ({  user, blogs, handleLogin, username, password, handleUsername
     <div>
       <p>Logged in as {user.name}</p><button onClick={handleLogout}>Logout</button>
       <Togglable buttonLabel="Add a new blog entry" ref={blogFormRef}>
-        <BlogForm  createBlog = {createBlog} user = {user} />
+        <BlogForm  createBlog = {createBlog} />
       </Togglable>
       <ListBlogs blogs = {blogs} user = {user} updateBlog = {updateBlog} deleteBlog = {deleteBlog} />
     </div>
   )
 }
 
-const DisplayMessage = ( {errorMessage, confirmationMessage}) => {
+const DisplayMessage = ( { errorMessage, confirmationMessage }) => {
   if (errorMessage != null){
     return (
       <div>
@@ -75,7 +76,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -97,7 +98,7 @@ const App = () => {
 
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
-      ) 
+      )
 
       blogService.setToken(user.token)
       setUser(user)
@@ -115,14 +116,14 @@ const App = () => {
     }
   }
 
-  const deleteBlog = async (blogObject, id) => {
+  const deleteBlog = async (blogObject) => {
 
     if(!window.confirm(`Are you sure you want to remove entry "${blogObject.title}" by ${blogObject.author}?`)){
       return
     }
     try {
       await blogService
-      .deletion(id)
+        .deletion(blogObject.id)
       setBlogs(blogs.filter(blog => blog.id!==blogObject.id))
     }catch (exception){
       setErrorMessage('could not delete blog')
@@ -135,7 +136,7 @@ const App = () => {
   const updateBlog = async (blogObject, id) => {
     try {
       const result = await blogService
-      .update(blogObject, id)
+        .update(blogObject, id)
       setBlogs(blogs.map(blog => {
         if (blog.id === result.id) {
           return result
@@ -153,15 +154,15 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
-    
   }
 
   const createBlog = async (blogObject) => {
 
+    blogObject.user = user.id
     blogFormRef.current.toggleVisibility()
     try {
       const result = await blogService
-      .create(blogObject)
+        .create(blogObject)
       setBlogs(blogs.concat(result))
 
       setConfirmationMessage('New entry added!')
@@ -201,15 +202,14 @@ const App = () => {
   return (
     <div>
       <DisplayMessage errorMessage = {errorMessage} confirmationMessage = {confirmationMessage} />
-      
-      <Content          user = {user}           handleLogin = {handleLogin}                     
-                        username = {username}   password = {password}   
-                        handleUsernameChange = {handleUsernameChange}   handlePasswordChange = {handlePasswordChange}
-                        blogs = {blogs}         handleLogout = {handleLogout}
-                        updateBlog = {updateBlog} deleteBlog = {deleteBlog}
+      <Content          user = {user}           handleLogin = {handleLogin}
+        username = {username}   password = {password}
+        handleUsernameChange = {handleUsernameChange}   handlePasswordChange = {handlePasswordChange}
+        blogs = {blogs}         handleLogout = {handleLogout}
+        updateBlog = {updateBlog} deleteBlog = {deleteBlog}
 
-                        createBlog = {createBlog} blogFormRef = {blogFormRef}
-                        /> 
+        createBlog = {createBlog} blogFormRef = {blogFormRef}
+      />
     </div>
   )
 }
