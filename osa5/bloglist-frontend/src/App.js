@@ -47,14 +47,14 @@ const Content = ({  user, blogs, handleLogin, username, password, handleUsername
 const DisplayMessage = ( { errorMessage, confirmationMessage }) => {
   if (errorMessage != null){
     return (
-      <div>
+      <div className="error">
         <p>{errorMessage}</p>
       </div>
     )
   }
   if (confirmationMessage != null){
     return (
-      <div>
+      <div className="confirmation">
         <p>{confirmationMessage}</p>
       </div>
     )

@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "test": "jest --runInBand --verbose"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+    "start:test": "cross-env NODE_ENV=test node index.js",
+    "cypress:open": "cross-env NODE_ENV=test node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +16,7 @@
     "bcrypt": "^3.0.7",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "jest": "^25.5.4",
@@ -23,8 +26,12 @@
     "nodemon": "^2.0.12"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^6.8.0",
     "mongoose-unique-validator": "^2.0.3",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

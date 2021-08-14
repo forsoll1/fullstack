@@ -19,21 +19,21 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
   const blogInfo = () => {
     return(
-      <div>
+      <div id="blogLarge">
         {blog.url}
         <br></br>
-        likes: {blog.likes}<button onClick={ () => updateBlog(likedBlog, blog.id)}>like</button>
+        likes: {blog.likes}<button id="likeButton" onClick={ () => updateBlog(likedBlog, blog.id)}>like</button>
         <br></br>
         {user.name}
         <br></br>
-        <button onClick={() => deleteBlog(blog)}>Remove blog entry</button>
+        <button id="deleteButton" onClick={() => deleteBlog(blog)}>Remove blog entry</button>
       </div>
     )
   }
 
   return(
-    <div style={blogStyle}>
-      {blog.title} {blog.author} <button onClick = { () => setViewInfo(!viewInfo)}>{viewInfo ? 'hide' : 'view'}</button>
+    <div className="blogSmall" style={blogStyle}>
+      {blog.title} {blog.author} <button id="viewButton" onClick = { () => setViewInfo(!viewInfo)}>{viewInfo ? 'hide' : 'view'}</button>
       {viewInfo ? blogInfo() : null }
     </div>
   )}
